@@ -1,9 +1,12 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App';
+import { createReduxStoreWrapper } from './setupTests';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test('renders app root component', () => {
+	const wrapper = createReduxStoreWrapper();
+
+	render(<App />, { wrapper });
+
+	const appRoot = screen.getByTestId(/app-root/i);
+	expect(appRoot).toBeInTheDocument();
 });
