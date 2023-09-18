@@ -1,6 +1,5 @@
 import logo from './logo.svg';
 import './App.css';
-import React from 'react';
 import { useTodos } from './hooks/useTodos';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -16,12 +15,12 @@ function App() {
 				<header className='App-header'>
 					<img src={logo} className='App-logo' alt='logo' />
 					<button
-						onClick={() =>
-							handleAddTodo({ id: 1, text: 'do tailwind', completed: true })
-						}>
+						onClick={() => {
+							handleAddTodo({ id: 2, text: 'do tailwind', completed: true });
+						}}>
 						Add Todo
 					</button>
-					<button onClick={() => handleRemoveTodo(1)}>Remove Todo</button>
+					<button onClick={() => handleRemoveTodo(2)}>Remove Todo</button>
 
 					<pre> {JSON.stringify(todos, null, 2)}</pre>
 				</header>

@@ -4,15 +4,13 @@ import { AppState } from '../../types/AppState';
 
 const todoSlice = createSlice({
 	name: 'todos',
-	initialState: {
-		todos: [],
-	} as AppState,
+	initialState: [] as AppState['todos'],
 	reducers: {
 		addTodo: (state, action: PayloadAction<Todo>) => {
-			state.todos.push(action.payload);
+			state.push(action.payload);
 		},
 		removeTodo: (state, action: PayloadAction<number>) => {
-			state.todos = state.todos.filter((t) => t.id !== action.payload);
+			return state.filter((t) => t.id !== action.payload);
 		},
 	},
 });

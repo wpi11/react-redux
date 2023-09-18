@@ -5,6 +5,8 @@ import { RenderHookOptions } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 
+global.React = React;
+
 // Create a redux store wrapper function
 export const createReduxStoreWrapper = (
 	initialState: AppState = { todos: [] }
