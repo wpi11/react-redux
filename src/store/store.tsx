@@ -1,25 +1,42 @@
+/**
+ * @module ReduxStore
+ * @description This module handles the configuration and management of the Redux store.
+ */
+
 import { configureStore } from '@reduxjs/toolkit';
 import todoReducer from './slices/todoSlice';
 import { STORAGE_KEYS, createStorageService } from '../services/StorageService';
 
+// Define the storage service for Redux state persistence.
 const storageService = createStorageService('sessionStorage');
 
-// Load state from storage
-const loadState = () => {
+/**
+ * Load state from storage.
+ *
+ * @template T - The type of state being loaded.
+ * @param {T} defaultState - The default state to use if nothing is found in storage.
+ * @returns {T} The loaded state or the default state if not found or an error occurs.
+ */
+const loadState = <T,>(defaultState: T): T => {
 	try {
 		const serializedState = storageService.getItem(STORAGE_KEYS.REDUX_STORE);
 		if (serializedState === null) {
-			return { todos: [] }; // Provide a default initial state here
+			return defaultState; // Provide a default initial state here
 		}
 		return JSON.parse(serializedState);
 	} catch (error) {
 		console.error('Error loading state from storage:', error);
-		return { todos: [] }; // Provide a default initial state here
+		return defaultState; // Provide a default initial state here
 	}
 };
 
-// Save state to storage after every action
-const saveState = (state: unknown) => {
+/**
+ * Save state to storage after every action.
+ *
+ * @template T - The type of state being saved.
+ * @param {T} state - The state to be saved.
+ */
+const saveState = <T,>(state: T) => {
 	try {
 		const serializedState = JSON.stringify(state);
 		storageService.setItem(STORAGE_KEYS.REDUX_STORE, serializedState);
@@ -28,14 +45,17 @@ const saveState = (state: unknown) => {
 	}
 };
 
+// Redux store instance configuration.
 const store = configureStore({
 	reducer: {
 		todos: todoReducer,
 	},
-	preloadedState: loadState(),
+	preloadedState: loadState({
+		/* Provide default initial state here */
+	}),
 });
 
-// Save state to storage after every action
+// Save state to storage after every action.
 store.subscribe(() => {
 	saveState(store.getState());
 });
