@@ -24,6 +24,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "jest",
+    "test:all": "jest --watchAll --verbose",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

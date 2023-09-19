@@ -10,11 +10,11 @@ import { AppState } from '../types/AppState';
 
 // Define initial state (optional)
 const initialState: AppState = {
-	todos: [{ id: 1, text: 'asdf', completed: false }],
+	todos: [], // { id: 1, text: 'asdf', completed: false }
 };
 
 // Define the storage service for Redux state persistence.
-const storageService = createStorageService('localStorage');
+export const storageService = createStorageService('localStorage');
 
 /**
  * Load state from storage.
@@ -23,13 +23,13 @@ const storageService = createStorageService('localStorage');
  * @param {T} defaultState - The default state to use if nothing is found in storage.
  * @returns {T} The loaded state or the default state if not found or an error occurs.
  */
-const loadState = <T,>(defaultState: T): T => {
+export const loadState = <T,>(defaultState: T): T => {
 	try {
 		const serializedState = storageService.getItem(STORAGE_KEYS.REDUX_STORE);
 		if (serializedState === null) {
 			return defaultState; // Provide a default initial state here
 		}
-		return { ...JSON.parse(serializedState), ...defaultState };
+		return JSON.parse(serializedState);
 	} catch (error) {
 		console.error('Error loading state from storage:', error);
 		return defaultState; // Provide a default initial state here
@@ -42,12 +42,15 @@ const loadState = <T,>(defaultState: T): T => {
  * @template T - The type of state being saved.
  * @param {T} state - The state to be saved.
  */
-const saveState = <T,>(state: T) => {
+export const saveState = <T,>(state: T) => {
 	try {
+		// console.log('saved!', state);
 		const serializedState = JSON.stringify(state);
 		storageService.setItem(STORAGE_KEYS.REDUX_STORE, serializedState);
+		return state;
 	} catch (error) {
 		console.error('Error saving state to storage:', error);
+		return null;
 	}
 };
 

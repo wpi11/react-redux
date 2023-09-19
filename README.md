@@ -47,5 +47,4 @@ In the project directory, you can run the following scripts:
 - [Redux Toolkit](https://redux-toolkit.js.org/) - The official, opinionated, batteries-included toolset for efficient Redux development.
 - [TypeScript](https://www.typescriptlang.org/) - A typed superset of JavaScript that compiles to plain JavaScript.
 - [React Redux](https://react-redux.js.org/) - Official React bindings for Redux.
-- [Redux Persist](https://github.com/rt2zz/redux-persist) - Persist and rehydrate a Redux store.
 - [Create React App](https://create-react-app.dev/) - A popular tool for creating React applications with no build configuration.
