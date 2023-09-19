@@ -6,9 +6,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 import todoReducer from './slices/todoSlice';
 import { STORAGE_KEYS, createStorageService } from '../services/StorageService';
+import { AppState } from '../types/AppState';
+
+// Define initial state (optional)
+const initialState: AppState = {
+	todos: [{ id: 1, text: 'asdf', completed: false }],
+};
 
 // Define the storage service for Redux state persistence.
-const storageService = createStorageService('sessionStorage');
+const storageService = createStorageService('localStorage');
 
 /**
  * Load state from storage.
@@ -23,7 +29,7 @@ const loadState = <T,>(defaultState: T): T => {
 		if (serializedState === null) {
 			return defaultState; // Provide a default initial state here
 		}
-		return JSON.parse(serializedState);
+		return { ...JSON.parse(serializedState), ...defaultState };
 	} catch (error) {
 		console.error('Error loading state from storage:', error);
 		return defaultState; // Provide a default initial state here
@@ -50,9 +56,7 @@ const store = configureStore({
 	reducer: {
 		todos: todoReducer,
 	},
-	preloadedState: loadState({
-		/* Provide default initial state here */
-	}),
+	preloadedState: loadState(initialState),
 });
 
 // Save state to storage after every action.
